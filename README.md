@@ -9,7 +9,7 @@
 
 *An intelligent, multilingual FAQ bot that transforms Jupiter Money's static help content into conversational AI assistance*
 
-[🚀 Quick Start](#-quick-start) • [📚 Features](#-features) • [🎯 Demo](#-demo) • [📊 Performance](#-performance) • [🤝 Contributing](#-contributing)
+[🚀 Quick Start](#-quick-start) • [📚 Features](#-features) • [🎯 Demo](https://jupiter-money-faqbot.streamlit.app/) 
 
 </div>
 
