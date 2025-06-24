@@ -28,13 +28,11 @@
 - [📊 Performance Analysis](#-performance-analysis)
 - [🧠 Intelligent Suggestions](#-intelligent-suggestions)
 - [🎮 Interactive Demo](#-interactive-demo)
-- [📈 Performance Benchmarks](#-performance-benchmarks)
+
 - [🔧 Configuration](#-configuration)
-- [🎯 API Usage](#-api-usage)
-- [🧪 Testing](#-testing)
+
 - [📚 Documentation](#-documentation)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+
 
 ---
 
@@ -320,61 +318,7 @@ streamlit run streamlit_app.py
 # - Data management tools
 ```
 
-### 3. 🐍 Command Line Interface
 
-For programmatic usage:
-
-```python
-from app import FAQBot, scrape_all_faqs_corrected, preprocess_faqs
-import os
-
-# Option 1: Use existing data
-import pandas as pd
-df = pd.read_csv("preprocessed_jupiter_faqs.csv")
-bot = FAQBot(df)
-
-# Option 2: Scrape fresh data
-raw_data = scrape_all_faqs_corrected(URL_MAPPING)
-clean_data = preprocess_faqs(raw_data)
-bot = FAQBot(clean_data)
-
-# Interact with the bot
-response = bot.get_conversational_answer("How do I transfer money?")
-print(response)
-```
-
-### 4. 🔌 API Integration
-
-```python
-# Initialize the bot
-bot = FAQBot(preprocessed_data)
-
-# Basic query processing
-def process_query(user_question):
-    response = bot.get_conversational_answer(user_question)
-    return {
-        'answer': response,
-        'timestamp': datetime.now(),
-        'confidence': bot.get_confidence_score(user_question)
-    }
-
-# Advanced features
-def enhanced_query(user_question, user_id):
-    # Get suggestions
-    suggestions = suggestion_engine.get_personalized_suggestions(
-        user_id, user_question, limit=5
-    )
-    
-    # Process multilingual query
-    response = multilingual_bot.get_conversational_answer(user_question)
-    
-    return {
-        'answer': response,
-        'suggestions': suggestions,
-        'language_detected': multilingual_bot.detect_language(user_question),
-        'processing_time': measure_response_time()
-    }
-```
 
 ---
 
@@ -431,17 +375,6 @@ Context: {banking_context}
 
 ---
 
-## 📊 Performance Analysis
-
-### Comparative Benchmarking
-
-The system includes comprehensive performance analysis comparing different AI approaches:
-
-| Approach | Response Time | Accuracy | Conversational Quality | Use Case |
-|----------|---------------|----------|----------------------|----------|
-| **Retrieval-Based** | ~50ms | 85% | Medium | Real-time applications |
-| **LLM-Enhanced** | ~3s | 95% | High | Quality conversations |
-| **Hybrid** | ~1s | 92% | High | Production balance |
 
 ### Performance Metrics
 
@@ -609,59 +542,9 @@ Suggestions:
 
 ### System Performance
 
-#### **Response Time Analysis**
-```
-Query Processing Pipeline:
-├── Language Detection: ~10ms
-├── Semantic Search: ~30ms
-├── LLM Generation: ~2000ms
-├── Translation (if needed): ~500ms
-└── Total Average: ~2540ms
 
-Optimized Performance:
-├── Cached Embeddings: ~5ms
-├── Pre-computed Clusters: ~15ms
-├── Streaming LLM: ~1200ms
-└── Optimized Total: ~1220ms
-```
 
-#### **Accuracy Metrics**
-```
-Evaluation Results:
-├── Semantic Relevance: 92%
-├── Factual Accuracy: 96%
-├── Conversational Quality: 89%
-├── Language Detection: 94%
-├── Translation Accuracy: 91%
-└── Overall User Satisfaction: 8.7/10
-```
 
-#### **Scalability Metrics**
-```
-Load Testing Results:
-├── Concurrent Users: 100+
-├── Queries per Second: 50+
-├── Database Size: 500+ FAQs
-├── Memory Usage: <2GB
-├── CPU Utilization: <60%
-└── Uptime: 99.9%
-```
-
-### Business Impact Metrics
-
-#### **Customer Experience**
-- **Query Resolution Rate**: 92% of queries receive relevant responses
-- **Average Session Length**: 4.2 interactions per user
-- **User Retention**: 78% return usage rate
-- **Language Adoption**: 35% non-English usage
-
-#### **Operational Efficiency**
-- **Support Ticket Reduction**: 40% decrease in repetitive queries
-- **Response Time Improvement**: 10x faster than manual FAQ browsing
-- **Coverage Expansion**: 100% FAQ coverage vs 60% manual
-- **Cost Savings**: 60% reduction in support agent time
-
----
 
 ## 🔧 Configuration
 
@@ -730,185 +613,6 @@ bot_config = {
 }
 ```
 
----
-
-## 🎯 API Usage
-
-### Core API Functions
-
-```python
-from app import FAQBot, MultilingualFAQBot, QuerySuggestionEngine
-
-# Initialize the bot
-bot = FAQBot(preprocessed_data)
-
-# Basic query processing
-response = bot.get_conversational_answer("Your question here")
-
-# Advanced multilingual processing
-multilingual_bot = MultilingualFAQBot(preprocessed_data, api_key)
-response = multilingual_bot.get_conversational_answer("आपका सवाल")
-
-# Get intelligent suggestions
-suggestion_engine = QuerySuggestionEngine(preprocessed_data, bot.model)
-suggestions = suggestion_engine.get_personalized_suggestions(
-    user_id="user123", 
-    current_query="account opening",
-    limit=5
-)
-```
-
-### REST API Integration
-
-```python
-# Example Flask API wrapper
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-bot = FAQBot(load_data())
-
-@app.route('/api/query', methods=['POST'])
-def process_query():
-    data = request.json
-    query = data.get('question')
-    user_id = data.get('user_id', 'anonymous')
-    language = data.get('language', 'auto')
-    
-    # Process the query
-    response = bot.get_conversational_answer(query)
-    suggestions = get_suggestions(user_id, query)
-    
-    return jsonify({
-        'answer': response,
-        'suggestions': suggestions,
-        'language_detected': detect_language(query),
-        'processing_time': measure_time(),
-        'confidence': calculate_confidence(query, response)
-    })
-
-@app.route('/api/suggestions/<user_id>')
-def get_user_suggestions(user_id):
-    suggestions = suggestion_engine.get_personalized_suggestions(user_id)
-    return jsonify({'suggestions': suggestions})
-```
-
-### WebSocket Real-time API
-
-```python
-# Real-time chat implementation
-import socketio
-
-sio = socketio.Server(cors_allowed_origins="*")
-
-@sio.event
-def connect(sid, environ):
-    print(f'Client {sid} connected')
-
-@sio.event
-def query(sid, data):
-    user_question = data['question']
-    user_id = data.get('user_id', sid)
-    
-    # Process query
-    response = multilingual_bot.get_conversational_answer(user_question)
-    suggestions = suggestion_engine.get_personalized_suggestions(user_id, user_question)
-    
-    # Send response
-    sio.emit('response', {
-        'answer': response,
-        'suggestions': suggestions,
-        'timestamp': datetime.now().isoformat()
-    }, room=sid)
-```
-
----
-
-## 🧪 Testing
-
-### Unit Tests
-
-```python
-# test_bot.py
-import unittest
-from app import FAQBot, preprocess_faqs
-
-class TestFAQBot(unittest.TestCase):
-    def setUp(self):
-        self.test_data = load_test_data()
-        self.bot = FAQBot(self.test_data)
-    
-    def test_query_processing(self):
-        response = self.bot.get_conversational_answer("test query")
-        self.assertIsInstance(response, str)
-        self.assertGreater(len(response), 0)
-    
-    def test_similarity_search(self):
-        index = self.bot.find_best_match_index("account opening")
-        self.assertIsNotNone(index)
-        self.assertIsInstance(index, int)
-    
-    def test_multilingual_support(self):
-        hindi_response = self.multilingual_bot.get_conversational_answer("खाता खोलना")
-        self.assertIn("account", hindi_response.lower())
-
-# Run tests
-python -m pytest test_bot.py -v
-```
-
-### Integration Tests
-
-```python
-# test_integration.py
-def test_end_to_end_flow():
-    # Test complete pipeline
-    raw_data = scrape_test_pages()
-    clean_data = preprocess_faqs(raw_data)
-    bot = FAQBot(clean_data)
-    
-    response = bot.get_conversational_answer("How do I transfer money?")
-    
-    assert len(response) > 50
-    assert "transfer" in response.lower()
-    assert response != "I'm sorry, but I couldn't find"
-
-def test_performance_requirements():
-    # Test response time requirements
-    start_time = time.time()
-    response = bot.get_conversational_answer("test query")
-    response_time = time.time() - start_time
-    
-    assert response_time < 5.0  # Must respond within 5 seconds
-    assert len(response) > 20   # Must provide substantial response
-```
-
-### Load Testing
-
-```python
-# test_load.py
-import concurrent.futures
-import time
-
-def load_test(concurrent_users=50, queries_per_user=10):
-    def user_simulation(user_id):
-        results = []
-        for i in range(queries_per_user):
-            start_time = time.time()
-            response = bot.get_conversational_answer(f"Test query {i}")
-            response_time = time.time() - start_time
-            results.append(response_time)
-        return results
-    
-    with concurrent.futures.ThreadPoolExecutor(max_workers=concurrent_users) as executor:
-        futures = [executor.submit(user_simulation, i) for i in range(concurrent_users)]
-        results = [future.result() for future in futures]
-    
-    # Analyze results
-    avg_response_time = sum(sum(result) for result in results) / (concurrent_users * queries_per_user)
-    print(f"Average response time: {avg_response_time:.2f}s")
-    print(f"Total queries processed: {concurrent_users * queries_per_user}")
-```
-
----
 
 ## 📚 Documentation
 
@@ -1061,69 +765,8 @@ genai.configure(api_key="your-key-here")
 bot.process_in_batches(data, batch_size=100)
 ```
 
-#### **Performance Issues**
 
-```python
-# Issue: Slow response times
-# Solution: Enable caching and optimize
-bot.enable_cache()
-bot.precompute_embeddings()
 
-# Issue: High memory usage
-# Solution: Clear cache periodically
-bot.clear_cache()
-import gc; gc.collect()
-```
-
-### Getting Help
-
-- **GitHub Issues**: Report bugs and feature requests
-- **Discussions**: Ask questions and share ideas
-- **Documentation**: Check comprehensive guides
-- **Examples**: Review sample code and notebooks
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### Third-Party Licenses
-
-- **sentence-transformers**: Apache 2.0 License
-- **FAISS**: MIT License
-- **Google Generative AI**: Google Cloud Terms
-- **Streamlit**: Apache 2.0 License
-
----
-
-## 🙏 Acknowledgments
-
-- **Jupiter Money**: For providing comprehensive FAQ content
-- **Google**: For Gemini API access and documentation
-- **Hugging Face**: For sentence-transformers models
-- **Facebook Research**: For FAISS vector search library
-- **Streamlit Team**: For the excellent web framework
-- **Open Source Community**: For the amazing Python ecosystem
-
----
-
-## 📞 Contact & Support
-
-- **GitHub**: [Project Repository](https://github.com/yourusername/jupiter-faq-bot)
-- **Issues**: [Bug Reports & Feature Requests](https://github.com/yourusername/jupiter-faq-bot/issues)
-- **Discussions**: [Community Forum](https://github.com/yourusername/jupiter-faq-bot/discussions)
-- **Email**: support@jupiter-faq-bot.com
-
----
-
-<div align="center">
-
-**⭐ Star this repository if you found it helpful!**
-
-**🔗 Share with others who might benefit from this project**
-
-**🤝 Contribute to make it even better**
 
 ---
 
