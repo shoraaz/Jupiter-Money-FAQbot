@@ -1,1 +1,29 @@
+# Core App Framework
+streamlit==1.46.0
 
+# Data Handling & Numerics
+pandas==2.3.0
+numpy==2.3.1
+
+# AI, Embeddings, and Vector Search
+google-generativeai==0.8.5
+sentence-transformers==4.1.0
+faiss-cpu==1.11.0
+transformers==4.52.4
+torch==2.7.1
+scikit-learn==1.7.0
+
+# Web Scraping & API Calls
+requests==2.32.4
+beautifulsoup4==4.13.4
+
+# Multilingual Support
+langdetect==1.0.9
+googletrans==4.0.0rc1
+
+# Visualization (Remove any you don't use)
+plotly==6.1.2
+altair==5.5.0
+seaborn==0.13.2
+matplotlib==3.10.3
+pydeck==0.9.1
