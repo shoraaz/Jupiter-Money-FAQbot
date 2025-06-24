@@ -13,6 +13,10 @@
 
 </div>
 
+click demo for live demo
+
+note-bonus features available in app.ipynb.
+
 ---
 
 ![Screenshot 2025-06-25 000338](https://github.com/user-attachments/assets/a2d04326-f678-4306-b060-b6526088ccf0)
