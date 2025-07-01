@@ -217,11 +217,12 @@ class FAQBot:
 
         try:
             response = self.llm.generate_content(prompt)
-            return response.text
+            if response and response.text:
+                return response.text
+            else:
+                return "❌ **API Error**: Please check if you've entered a valid Gemini API key. The bot cannot generate conversational responses without a working API connection.\n\n💡 **Tip**: You can find relevant answers directly from the FAQ database by browsing the categories or trying different search terms."
         except Exception as e:
-            st.error(f"Error generating response from Gemini: {e}")
-            # Fallback to the direct answer if Gemini fails
-            return f"I found this information which might help:\n\n{retrieved_answer}"
+            return "❌ **API Error**: Please check if you've entered a valid Gemini API key. The bot cannot generate conversational responses without a working API connection.\n\n💡 **Tip**: You can find relevant answers directly from the FAQ database by browsing the categories or trying different search terms."
 
 
 def main():
